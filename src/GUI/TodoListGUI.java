@@ -22,12 +22,14 @@ public class TodoListGUI {
     String driver = "com.mysql.cj.jdbc.Driver";
     
     public Connection getCon(){
+        return connection;
+    }
+    public void setCon(){
         try{
             Class.forName(driver);
             connection = DriverManager.getConnection(url, usermek, pass);
         }catch(Exception finax){
             finax.printStackTrace();
         }
-        return connection;
     }
 }

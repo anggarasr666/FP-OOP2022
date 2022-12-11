@@ -4,14 +4,16 @@
  */
 package Service;
 
+import javax.swing.JTable;
+
 /**
  *
  * @author anggarasaputra
  */
 public interface TodoListService {
-    void showTodoList();
+    void showTodoList(JTable jTable1);
     
-    void addTodoList(String todo);
+    void addTodoList(String Addlist);
     
-    void removeTodoList(Integer number);
+    void removeTodoList(String TeksRemoved);
 }

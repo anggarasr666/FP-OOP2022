@@ -4,20 +4,32 @@
  */
 package GUI;
 
+import Repository.TodoListRepository;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import Service.TodoListServiceimpl;
 /**
  *
  * @author anggarasaputra
  */
 public class TodoListUI extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TodoListUI
-     */
-    public TodoListUI() {
+    private final TodoListServiceimpl todoImpl = new TodoListServiceimpl();
+    public TodoListUI() throws SQLException {
         initComponents();
         AddPanel.setVisible(false);
         RemovePanel.setVisible(false);
+        todoImpl.showTodoList(jTable1);
     }
+
+    public JTable getjTable1() {
+        return jTable1;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,11 +47,11 @@ public class TodoListUI extends javax.swing.JFrame {
         X = new javax.swing.JButton();
         RemoveMenu = new javax.swing.JButton();
         AddPanel = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        TeksAdd = new javax.swing.JTextField();
         Add = new javax.swing.JButton();
         Back = new javax.swing.JButton();
         RemovePanel = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
+        TeksRemoved = new javax.swing.JTextField();
         Back2 = new javax.swing.JButton();
         Removed = new javax.swing.JButton();
 
@@ -121,9 +133,18 @@ public class TodoListUI extends javax.swing.JFrame {
                     .addContainerGap()))
         );
 
-        jTextField1.setText("jTextField1");
+        TeksAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TeksAddActionPerformed(evt);
+            }
+        });
 
         Add.setText("Add");
+        Add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddActionPerformed(evt);
+            }
+        });
 
         Back.setText("Back");
         Back.addActionListener(new java.awt.event.ActionListener() {
@@ -140,7 +161,7 @@ public class TodoListUI extends javax.swing.JFrame {
             .addGroup(AddPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddPanelLayout.createSequentialGroup()
                     .addContainerGap(46, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TeksAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(42, Short.MAX_VALUE)))
             .addGroup(AddPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddPanelLayout.createSequentialGroup()
@@ -158,8 +179,8 @@ public class TodoListUI extends javax.swing.JFrame {
             .addGap(0, 438, Short.MAX_VALUE)
             .addGroup(AddPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddPanelLayout.createSequentialGroup()
-                    .addContainerGap(108, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(107, Short.MAX_VALUE)
+                    .addComponent(TeksAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(221, Short.MAX_VALUE)))
             .addGroup(AddPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddPanelLayout.createSequentialGroup()
@@ -173,10 +194,9 @@ public class TodoListUI extends javax.swing.JFrame {
                     .addContainerGap()))
         );
 
-        jTextField2.setText("jTextField1");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        TeksRemoved.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                TeksRemovedActionPerformed(evt);
             }
         });
 
@@ -198,41 +218,31 @@ public class TodoListUI extends javax.swing.JFrame {
         RemovePanel.setLayout(RemovePanelLayout);
         RemovePanelLayout.setHorizontalGroup(
             RemovePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 338, Short.MAX_VALUE)
-            .addGroup(RemovePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(RemovePanelLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(RemovePanelLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(Removed)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addComponent(Back2)
+                .addGap(42, 42, 42))
             .addGroup(RemovePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RemovePanelLayout.createSequentialGroup()
-                    .addContainerGap(260, Short.MAX_VALUE)
-                    .addComponent(Back2)
-                    .addContainerGap()))
-            .addGroup(RemovePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(RemovePanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(Removed)
-                    .addContainerGap(254, Short.MAX_VALUE)))
+                    .addContainerGap(44, Short.MAX_VALUE)
+                    .addComponent(TeksRemoved, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(44, Short.MAX_VALUE)))
         );
         RemovePanelLayout.setVerticalGroup(
             RemovePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 438, Short.MAX_VALUE)
-            .addGroup(RemovePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(RemovePanelLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(RemovePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RemovePanelLayout.createSequentialGroup()
-                    .addContainerGap(409, Short.MAX_VALUE)
-                    .addComponent(Back2)
-                    .addContainerGap()))
-            .addGroup(RemovePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RemovePanelLayout.createSequentialGroup()
-                    .addContainerGap(409, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RemovePanelLayout.createSequentialGroup()
+                .addContainerGap(398, Short.MAX_VALUE)
+                .addGroup(RemovePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Removed)
-                    .addContainerGap()))
+                    .addComponent(Back2))
+                .addGap(17, 17, 17))
+            .addGroup(RemovePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RemovePanelLayout.createSequentialGroup()
+                    .addContainerGap(103, Short.MAX_VALUE)
+                    .addComponent(TeksRemoved, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(227, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -287,12 +297,15 @@ public class TodoListUI extends javax.swing.JFrame {
     }//GEN-LAST:event_BackActionPerformed
 
     private void RemovedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemovedActionPerformed
-        // TODO add your handling code here:
+        todoImpl.removeTodoList(TeksRemoved.getText());
+        todoImpl.showTodoList(jTable1);
+        MainPanel.setVisible(true);
+        RemovePanel.setVisible(false);
     }//GEN-LAST:event_RemovedActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void TeksRemovedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TeksRemovedActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_TeksRemovedActionPerformed
 
     private void Back2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back2ActionPerformed
         RemovePanel.setVisible(false);
@@ -305,40 +318,22 @@ public class TodoListUI extends javax.swing.JFrame {
         RemovePanel.setVisible(true);
     }//GEN-LAST:event_RemoveMenuActionPerformed
 
+    private void TeksAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TeksAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeksAddActionPerformed
+
+    private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
+        String Addlist = TeksAdd.getText();
+        todoImpl.addTodoList(Addlist);
+        todoImpl.showTodoList(jTable1);
+        AddPanel.setVisible(false);
+        MainPanel.setVisible(true);
+    }//GEN-LAST:event_AddActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TodoListUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TodoListUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TodoListUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TodoListUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TodoListUI().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Add;
@@ -350,10 +345,10 @@ public class TodoListUI extends javax.swing.JFrame {
     private javax.swing.JButton RemoveMenu;
     private javax.swing.JPanel RemovePanel;
     private javax.swing.JButton Removed;
+    private javax.swing.JTextField TeksAdd;
+    private javax.swing.JTextField TeksRemoved;
     private javax.swing.JButton X;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
