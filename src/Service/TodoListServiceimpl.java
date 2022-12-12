@@ -6,14 +6,16 @@ package Service;
 
 //import static aplikasitodolist.AplikasiTodoList.model;
 
-import Entity.Todolist;
 import GUI.TodoListGUI;
 import GUI.TodoListUI;
-import Repository.TodoListRepository;
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -41,7 +43,7 @@ public class TodoListServiceimpl implements TodoListService{
         //ArrayList<String> comList = new ArrayList<String>();
         try {
             String[] comString = {
-                "Nomor", "Kegiatan"
+                "Nomor", "Kegiatan", "Pengerjaan"
             }; var count = 0;
             DefaultTableModel tModel = new DefaultTableModel(null, comString);
             ResultSet rs = state.executeQuery("SELECT * FROM `ListTodo`");
@@ -49,7 +51,7 @@ public class TodoListServiceimpl implements TodoListService{
                 count += 1;
                 String[] dataString = {
                     Integer.toString(count), 
-                    rs.getString("Kegiatan")
+                    rs.getString("Kegiatan"), rs.getString("Pengerjaan")
             };
             tModel.addRow(dataString);
         }
@@ -61,11 +63,17 @@ public class TodoListServiceimpl implements TodoListService{
     
     @Override
     public void addTodoList(String Addlist){
+        ArrayList<String> addToDo = new ArrayList<String>();
         try {
-            state.execute("INSERT INTO `ListTodo`(`Kegiatan`) VALUES(' " + Addlist + "' )");
-        } catch (SQLException ex) {
-            Logger.getLogger(TodoListUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            for(String todo : Arrays.asList(Addlist.split("[, ]+"))) {
+                addToDo.add(todo);
+            }
+            for (String string : addToDo) {
+                state.execute("INSERT INTO ListTodo(Kegiatan, Pengerjaan) VALUES ('" + string + "', 'Belum Dikerjakan' )");
+            }                      
+        } catch (SQLException ex) {             
+            Logger.getLogger(TodoListUI.class.getName()).log(Level.SEVERE, null, ex);         
+        }     
     }
     
     @Override

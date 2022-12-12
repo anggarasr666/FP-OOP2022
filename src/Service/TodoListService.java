@@ -4,6 +4,7 @@
  */
 package Service;
 
+import java.util.ArrayList;
 import javax.swing.JTable;
 
 /**
@@ -13,7 +14,8 @@ import javax.swing.JTable;
 public interface TodoListService {
     void showTodoList(JTable jTable1);
     
-    void addTodoList(String Addlist);
+    void addTodoList(String TeksAdd);
     
     void removeTodoList(String TeksRemoved);
+    
 }

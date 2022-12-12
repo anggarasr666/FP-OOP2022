@@ -1,4 +1,12 @@
 # FP-OOP2022
+To Do List 
+
+# Introduce
+Nama    : Anggara Saputra
+NRP      : 5025211241
+
+# About Program & Implementation
+
 FP-OOP2022
 membuat aplikasi to do list berbasis database.
 aplikasi dapat menambahkan berbagai macam kegitan dalam bentu string.

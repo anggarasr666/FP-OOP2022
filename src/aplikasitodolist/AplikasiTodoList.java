@@ -5,8 +5,6 @@
 package aplikasitodolist;
 
 import GUI.TodoListUI;
-import Repository.TodoListRepository;
-import Repository.TodoListRepositoryImpl;
 import Service.TodoListService;
 import Service.TodoListServiceimpl;
 import java.sql.Connection;

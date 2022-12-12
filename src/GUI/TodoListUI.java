@@ -4,7 +4,6 @@
  */
 package GUI;
 
-import Repository.TodoListRepository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -12,6 +11,8 @@ import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import Service.TodoListServiceimpl;
+import Mark.TodoListAssigmentExtd;
+import javax.swing.JSpinner;
 /**
  *
  * @author anggarasaputra
@@ -22,6 +23,7 @@ public class TodoListUI extends javax.swing.JFrame {
         initComponents();
         AddPanel.setVisible(false);
         RemovePanel.setVisible(false);
+        UpdatePanel.setVisible(false);
         todoImpl.showTodoList(jTable1);
     }
 
@@ -44,7 +46,7 @@ public class TodoListUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         AddMenu = new javax.swing.JButton();
-        X = new javax.swing.JButton();
+        UpdateMenu = new javax.swing.JButton();
         RemoveMenu = new javax.swing.JButton();
         AddPanel = new javax.swing.JPanel();
         TeksAdd = new javax.swing.JTextField();
@@ -54,6 +56,11 @@ public class TodoListUI extends javax.swing.JFrame {
         TeksRemoved = new javax.swing.JTextField();
         Back2 = new javax.swing.JButton();
         Removed = new javax.swing.JButton();
+        UpdatePanel = new javax.swing.JPanel();
+        TeksUpdate = new javax.swing.JTextField();
+        Back3 = new javax.swing.JButton();
+        Update = new javax.swing.JButton();
+        setStatus = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,7 +84,12 @@ public class TodoListUI extends javax.swing.JFrame {
             }
         });
 
-        X.setText("X");
+        UpdateMenu.setText("UpdateMenu");
+        UpdateMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateMenuActionPerformed(evt);
+            }
+        });
 
         RemoveMenu.setText("RemoveMenu");
         RemoveMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -101,8 +113,8 @@ public class TodoListUI extends javax.swing.JFrame {
                     .addContainerGap(246, Short.MAX_VALUE)))
             .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
-                    .addContainerGap(309, Short.MAX_VALUE)
-                    .addComponent(X)
+                    .addContainerGap(227, Short.MAX_VALUE)
+                    .addComponent(UpdateMenu)
                     .addContainerGap()))
             .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
@@ -124,7 +136,7 @@ public class TodoListUI extends javax.swing.JFrame {
             .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
                     .addContainerGap(409, Short.MAX_VALUE)
-                    .addComponent(X)
+                    .addComponent(UpdateMenu)
                     .addContainerGap()))
             .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
@@ -245,6 +257,58 @@ public class TodoListUI extends javax.swing.JFrame {
                     .addContainerGap(227, Short.MAX_VALUE)))
         );
 
+        TeksUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TeksUpdateActionPerformed(evt);
+            }
+        });
+
+        Back3.setText("Back");
+        Back3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Back3ActionPerformed(evt);
+            }
+        });
+
+        Update.setText("Update");
+        Update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateActionPerformed(evt);
+            }
+        });
+
+        setStatus.setModel(new javax.swing.SpinnerListModel(new String[] {"Sudah Dikerjakan", "Ditunda"}));
+
+        javax.swing.GroupLayout UpdatePanelLayout = new javax.swing.GroupLayout(UpdatePanel);
+        UpdatePanel.setLayout(UpdatePanelLayout);
+        UpdatePanelLayout.setHorizontalGroup(
+            UpdatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UpdatePanelLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(Update)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(setStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Back3)
+                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdatePanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TeksUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66))
+        );
+        UpdatePanelLayout.setVerticalGroup(
+            UpdatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UpdatePanelLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(TeksUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
+                .addGroup(UpdatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Update)
+                    .addComponent(Back3)
+                    .addComponent(setStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -263,6 +327,11 @@ public class TodoListUI extends javax.swing.JFrame {
                     .addContainerGap()
                     .addComponent(RemovePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(UpdatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,6 +349,11 @@ public class TodoListUI extends javax.swing.JFrame {
                     .addContainerGap()
                     .addComponent(RemovePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(UpdatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -289,6 +363,7 @@ public class TodoListUI extends javax.swing.JFrame {
         MainPanel.setVisible(false);
         AddPanel.setVisible(true);
         RemovePanel.setVisible(false);
+        UpdatePanel.setVisible(false);
     }//GEN-LAST:event_AddMenuActionPerformed
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
@@ -316,6 +391,7 @@ public class TodoListUI extends javax.swing.JFrame {
         MainPanel.setVisible(false);
         AddPanel.setVisible(false);
         RemovePanel.setVisible(true);
+        UpdatePanel.setVisible(false);
     }//GEN-LAST:event_RemoveMenuActionPerformed
 
     private void TeksAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TeksAddActionPerformed
@@ -330,6 +406,31 @@ public class TodoListUI extends javax.swing.JFrame {
         MainPanel.setVisible(true);
     }//GEN-LAST:event_AddActionPerformed
 
+    private void TeksUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TeksUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeksUpdateActionPerformed
+
+    private void Back3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back3ActionPerformed
+        UpdatePanel.setVisible(false);
+        MainPanel.setVisible(true);
+    }//GEN-LAST:event_Back3ActionPerformed
+
+    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
+        TodoListAssigmentExtd setU = new TodoListAssigmentExtd();
+        setU.setStatus(setStatus.getValue().toString());
+        setU.setUpdated(TeksUpdate.getText());
+        todoImpl.showTodoList(jTable1);
+        MainPanel.setVisible(true);
+        UpdatePanel.setVisible(false);
+    }//GEN-LAST:event_UpdateActionPerformed
+
+    private void UpdateMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateMenuActionPerformed
+        MainPanel.setVisible(false);
+        AddPanel.setVisible(false);
+        RemovePanel.setVisible(false);
+        UpdatePanel.setVisible(true);
+    }//GEN-LAST:event_UpdateMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -341,14 +442,19 @@ public class TodoListUI extends javax.swing.JFrame {
     private javax.swing.JPanel AddPanel;
     private javax.swing.JButton Back;
     private javax.swing.JButton Back2;
+    private javax.swing.JButton Back3;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JButton RemoveMenu;
     private javax.swing.JPanel RemovePanel;
     private javax.swing.JButton Removed;
     private javax.swing.JTextField TeksAdd;
     private javax.swing.JTextField TeksRemoved;
-    private javax.swing.JButton X;
+    private javax.swing.JTextField TeksUpdate;
+    private javax.swing.JButton Update;
+    private javax.swing.JButton UpdateMenu;
+    private javax.swing.JPanel UpdatePanel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JSpinner setStatus;
     // End of variables declaration//GEN-END:variables
 }

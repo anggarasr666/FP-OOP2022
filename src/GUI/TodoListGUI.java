@@ -17,7 +17,7 @@ public class TodoListGUI {
     Connection connection;
     Statement qStatement;
     String url = "jdbc:mysql://localhost/TodoList";
-    String usermek = "root";
+    String user = "root";
     String pass = "";
     String driver = "com.mysql.cj.jdbc.Driver";
     
@@ -27,7 +27,7 @@ public class TodoListGUI {
     public void setCon(){
         try{
             Class.forName(driver);
-            connection = DriverManager.getConnection(url, usermek, pass);
+            connection = DriverManager.getConnection(url, user, pass);
         }catch(Exception finax){
             finax.printStackTrace();
         }
