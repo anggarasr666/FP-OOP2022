@@ -65,7 +65,7 @@ public class TodoListServiceimpl implements TodoListService{
     public void addTodoList(String Addlist){
         ArrayList<String> addToDo = new ArrayList<String>();
         try {
-            for(String todo : Arrays.asList(Addlist.split("[, ]+"))) {
+            for(String todo : Arrays.asList(Addlist.split("[,]+[ ]"))) {
                 addToDo.add(todo);
             }
             for (String string : addToDo) {
