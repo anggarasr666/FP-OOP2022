@@ -30,7 +30,7 @@ public class TodoListServiceimpl implements TodoListService{
     private TodoListGUI connectionn = new TodoListGUI();
     private Statement state;
     private Connection rConnect;
-
+    //constructor
     public TodoListServiceimpl() throws SQLException {
         connectionn.setCon();
         rConnect = connectionn.getCon();
@@ -63,7 +63,7 @@ public class TodoListServiceimpl implements TodoListService{
     
     @Override
     public void addTodoList(String Addlist){
-        ArrayList<String> addToDo = new ArrayList<String>();
+        ArrayList<String> addToDo = new ArrayList<String>(); //ArrayList
         try {
             for(String todo : Arrays.asList(Addlist.split("[,]+[ ]"))) {
                 addToDo.add(todo);
@@ -81,7 +81,7 @@ public class TodoListServiceimpl implements TodoListService{
        ResultSet rs;
         try {
             rs = state.executeQuery("SELECT * FROM `ListTodo`");
-            int hapus = Integer.parseInt(TeksRemoved);
+            int hapus = Integer.parseInt(TeksRemoved); //casting
             int count = 1;
             int data = -1;
             while(rs.next()){

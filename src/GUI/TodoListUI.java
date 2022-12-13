@@ -17,8 +17,9 @@ import javax.swing.JSpinner;
  *
  * @author anggarasaputra
  */
+//inheritance
 public class TodoListUI extends javax.swing.JFrame {
-    private final TodoListServiceimpl todoImpl = new TodoListServiceimpl();
+    private final TodoListServiceimpl todoImpl = new TodoListServiceimpl();//encapsulation
     public TodoListUI() throws SQLException {
         initComponents();
         AddPanel.setVisible(false);

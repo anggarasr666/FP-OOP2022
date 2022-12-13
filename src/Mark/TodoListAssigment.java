@@ -16,7 +16,7 @@ public abstract class TodoListAssigment {
     
     public void setStatus(){
         status = "Belum Dikerjakan";
-    }
+    }//overloading
     
     public abstract String getStatus();
 }
